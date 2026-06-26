@@ -190,7 +190,7 @@ export default function ProfilePage() {
             <CardHeader><CardTitle className="text-lg">{t("Basic Information", "基本資料")}</CardTitle></CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div><Label>{t("Full Name", "姓名")} *</Label><Input value={profile.fullName} onChange={(e) => updateField("fullName", e.target.value)} placeholder={t("e.g. Tian QIN", "例：秦天")} /></div>
+                <div><Label>{t("Full Name", "姓名")} *</Label><Input value={profile.fullName} onChange={(e) => updateField("fullName", e.target.value)} placeholder={t("e.g. John Smith", "例：張三")} /></div>
                 <div><Label>{t("Email", "電郵")} *</Label><Input value={profile.email} onChange={(e) => updateField("email", e.target.value)} placeholder="you@example.com" /></div>
                 <div><Label>{t("Phone", "電話")}</Label><Input value={profile.phone} onChange={(e) => updateField("phone", e.target.value)} placeholder="+852 1234 5678" /></div>
                 <div><Label>{t("Location", "所在地")}</Label><Input value={profile.location} onChange={(e) => updateField("location", e.target.value)} placeholder={t("e.g. Hong Kong", "例：香港")} /></div>
