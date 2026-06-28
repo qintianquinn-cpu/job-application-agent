@@ -123,6 +123,23 @@ export interface JdAnalysisResponse extends JdAnalysis {
   matchedMustHaves: number;
 }
 
+export interface JobApplicationRecord {
+  id: string;
+  jobTitle: string;
+  company: string;
+  matchScore: number;
+  matchBreakdown: {
+    skills: number;
+    experience: number;
+    education: number;
+    overall: number;
+  };
+  suggestions: string[];
+  missingGaps: string[];
+  appliedAt: string; // ISO timestamp
+  jdSummary: string;
+}
+
 export type AppLanguage = "en" | "zh-TW";
 
 export interface AppState {
@@ -130,4 +147,5 @@ export interface AppState {
   currentCvHtml: string | null;
   currentCoverLetter: string | null;
   language: AppLanguage;
+  applicationRecords: JobApplicationRecord[];
 }

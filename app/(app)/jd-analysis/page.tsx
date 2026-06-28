@@ -32,8 +32,8 @@ const typeBadgeColors: Record<RequirementType, string> = {
 export default function JdAnalysisPage() {
   const router = useRouter();
   const profile = useProfileStore((s) => s.profile);
-  const { _hasHydrated } = useProfileStore();
-  const { currentAnalysis, setAnalysis, setCvHtml, setCoverLetter, setJdLanguage, language } = useAppStore();
+  const { _hasHydrated: profileHydrated } = useProfileStore();
+  const { currentAnalysis, setAnalysis, setCvHtml, setCoverLetter, setJdLanguage, language, addApplicationRecord, _hasHydrated: appHydrated } = useAppStore();
 
   const [jdText, setJdText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -51,6 +51,18 @@ export default function JdAnalysisPage() {
       setJdLanguage(jdLang);
       setCvHtml(null);
       setCoverLetter(null);
+      // Auto-save application record
+      addApplicationRecord({
+        id: crypto.randomUUID(),
+        jobTitle: result.jobTitle,
+        company: result.company,
+        matchScore: result.matchScore,
+        matchBreakdown: result.matchBreakdown,
+        suggestions: result.suggestedHighlights,
+        missingGaps: result.missingGaps,
+        appliedAt: new Date().toISOString(),
+        jdSummary: jdText.slice(0, 300),
+      });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Analysis failed");
     } finally {
@@ -58,7 +70,7 @@ export default function JdAnalysisPage() {
     }
   };
 
-  if (!_hasHydrated) return <div className="py-20 text-center text-gray-400">Loading...</div>;
+  if (!profileHydrated || !appHydrated) return <div className="py-20 text-center text-gray-400">Loading...</div>;
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-green-600";
@@ -286,9 +298,10 @@ export default function JdAnalysisPage() {
           </div>
 
           <Separator />
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             <Button onClick={() => router.push("/cv-generator")}>{t("Generate CV →", "生成履歷 →")}</Button>
             <Button variant="outline" onClick={() => router.push("/cover-letter")}>{t("Generate Cover Letter →", "生成求職信 →")}</Button>
+            <Button variant="secondary" onClick={() => router.push("/application-records")}>{t("View Records →", "查看投遞記錄 →")}</Button>
           </div>
         </>
       )}

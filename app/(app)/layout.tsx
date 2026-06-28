@@ -10,6 +10,7 @@ const steps = [
   { path: "/jd-analysis", label: "JD Analysis", labelZh: "JD 分析" },
   { path: "/cv-generator", label: "CV", labelZh: "履歷" },
   { path: "/cover-letter", label: "Cover Letter", labelZh: "求職信" },
+  { path: "/application-records", label: "Records", labelZh: "投遞記錄" },
 ];
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
